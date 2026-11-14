@@ -12,22 +12,25 @@ box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:en
 :root[data-theme="dark"]{--bg:#101a15;--panel:#18251e;--ink:#e6efe9;--sub:#98aaa0;--line:#2c3e34;--acc:#5ec28f;--accink:#08150e;--err:#ff8a7e;--ok:#5ec28f;color-scheme:dark}
 html{scroll-padding-top:env(safe-area-inset-top,0px)}
 body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.7 "Hiragino Sans","Yu Gothic","Noto Sans JP",system-ui,sans-serif}
-main{max-width:760px;margin:0 auto;padding:20px 16px 40px}
+main{max-width:760px;margin:0 auto;padding:28px 16px 40px;text-align:center}
 h1{font-size:22px;margin:0 0 4px}
 p.lead{margin:0 0 18px;color:var(--sub)}
 label{display:block;font-weight:600;margin:14px 0 6px}
-textarea{width:100%;box-sizing:border-box;min-height:150px;padding:10px;border:1px solid var(--line);border-radius:6px;background:var(--panel);color:var(--ink);font:12px/1.5 ui-monospace,Menlo,monospace;resize:vertical}
-.row{display:flex;flex-wrap:wrap;gap:10px 18px;align-items:center;margin:8px 0}
+textarea{width:100%;box-sizing:border-box;min-height:150px;padding:10px;border:1px solid var(--line);border-radius:6px;background:var(--panel);color:var(--ink);font:12px/1.5 ui-monospace,Menlo,monospace;resize:vertical;text-align:left}
+.row{display:flex;flex-wrap:wrap;gap:10px 18px;align-items:center;justify-content:center;margin:8px 0}
 .row label{display:flex;gap:6px;align-items:center;margin:0;font-weight:400}
 [hidden]{display:none!important}
 select,input[type=number]{padding:6px 8px;border:1px solid var(--line);border-radius:6px;background:var(--panel);color:var(--ink);font:inherit}
 button{padding:9px 16px;border:0;border-radius:6px;background:var(--acc);color:var(--accink);font:inherit;font-weight:600;cursor:pointer}
+button#go,button#copy{padding:14px 16px;font-size:17px}
+button#go{flex:2 1 200px}
+button#copy{flex:1 1 140px}
 button:disabled{display:none}
 button.sec{background:transparent;color:var(--ink);border:1px solid var(--line)}
 button:focus-visible,textarea:focus-visible,select:focus-visible,input:focus-visible{outline:2px solid var(--acc);outline-offset:2px}
-#msg{flex:1 1 220px;min-height:1.5em}
+#msg{flex:1 1 100%;min-height:1.5em}
 .err{color:var(--err)}.ok{color:var(--ok);font-weight:600}
-.warn{color:var(--sub);font-size:13px}
+.warn{color:var(--sub);font-size:12px;margin:4px 0 0}
 .table{overflow-x:auto}
 details{margin:12px 0}summary{cursor:pointer;color:var(--sub);font-size:13px}details:has(#tbl:empty){display:none}
 table{border-collapse:collapse;font-size:13px;min-width:100%}
@@ -37,11 +40,11 @@ th,td{border-bottom:1px solid var(--line);padding:4px 10px;text-align:left;white
 <body>
 <main>
 <h1>天鳳 Mortal 東風 → 半荘 牌譜コンバーター</h1>
-<p class="lead">Mortalは東風戦に対応していないため、東風戦の牌譜を半荘戦の牌譜に変換して、疑似的に検討できるようにするツールです。コピーしたものをMortalのカスタム牌譜に貼ってください。</p>
+<p class="lead">天鳳の東風戦牌譜を、Mortalで検討できる半荘形式に変換します。</p>
 <div class="row" role="radiogroup" aria-label="変換先"><label><input type="radio" name="mode" id="m4" checked>半荘の南場として出力</label><label><input type="radio" name="mode" id="m0">半荘の東場として出力</label></div>
-<p class="warn" id="warn">注意：半荘の南場として扱うため、場風の役牌が変わります（東→南、サドンデスでは南→西）。</p>
 <textarea id="src" aria-label="天鳳の牌譜リンク" spellcheck="false" style="min-height:72px" placeholder="https://tenhou.net/0/?log=… のような天鳳の牌譜URLを貼る"></textarea>
 <div class="row"><button id="go">変換する</button><button id="copy" disabled>結果をコピー</button><span id="msg" role="status"></span></div>
+<p class="warn" id="warn">注意：半荘の南場として扱うため、場風の役牌が変わります（東→南、サドンデスでは南→西）。</p>
 <textarea id="out" hidden></textarea>
 </main>
 <script>

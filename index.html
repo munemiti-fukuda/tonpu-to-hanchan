@@ -159,7 +159,7 @@ $("m0").onchange=$("m4").onchange=onMode;
 $("src").addEventListener("input",function(){$("out").value="";$("copy").disabled=true;say("")});
 $("copy").onclick=function(){
   var v=$("out").value;
-  function done(){say("コピーしました。","ok")}
+  function done(){say("コピーしました。Mortalのカスタム牌譜にコピーしたものを貼ってください。","ok")}
   function fb(){var t=document.createElement("textarea");t.value=v;t.style.cssText="position:fixed;opacity:0";document.body.appendChild(t);t.select();var okc=false;try{okc=document.execCommand("copy")}catch(e){}document.body.removeChild(t);if(okc)done();else say("手動でコピーしてください。","err")}
   if(navigator.clipboard&&navigator.clipboard.writeText)navigator.clipboard.writeText(v).then(done,fb);else fb();
 };

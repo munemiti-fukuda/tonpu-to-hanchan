@@ -93,7 +93,9 @@ function xmlToJson(x){
       var w=+a("who"),fr=+a("fromWho"),pao=a("paoWho")==null?w:+a("paoWho");
       k.ag.push([dl,[w,fr,pao,(a("yakuman")?"役満":ten[0]+"符"+han+"飜")+ten[1]+"点"].concat(names)]);
       if(a("doraHaiUra")&&!k.u.length)k.u=a("doraHaiUra").split(",").map(function(v){return tc(+v)});
-      k.res=[].concat.apply(["和了"],k.ag)}
+      k.res=off>=4
+        ?["流局",k.ag.reduce(function(s,g){return s.map(function(v,n){return v+g[0][n]})},[0,0,0,0])]
+        :[].concat.apply(["和了"],k.ag)}
     else if(n==="RYUUKYOKU"){var sc=a("sc").split(",").map(Number);k.res=[RY[a("type")]||"流局",[0,1,2,3].map(function(i){return sc[i*2+1]*100})]}
   });
   if(ks.some(function(q){return q.h[0]<0||q.h[0]>11})){say("変換できません。変換後に西4局を超える局があります。東風戦の牌譜を貼っているか確認してください。","err");return}
@@ -144,6 +146,14 @@ $("go").onclick=function(){
     var pts=d.log[i][1]||[],sum=0;pts.forEach(function(p){sum+=p});
     if(pts.length===4&&sum+(h[2]||0)*1000!==100000)warns.push(label(h[0])+" の持ち点合計が "+(sum+(h[2]||0)*1000)+" 点です。");
     h[0]=to;
+    if(off>=4){
+      var li=d.log[i].length-1,rs=d.log[i][li];
+      if(Array.isArray(rs)&&rs[0]==="和了"){
+        var dsum=[0,0,0,0];
+        for(var jj=1;jj<rs.length;jj+=2)if(Array.isArray(rs[jj]))rs[jj].forEach(function(v,n){dsum[n]+=v});
+        d.log[i][li]=["流局",dsum];
+      }
+    }
   }
   if(d.rule&&typeof d.rule.disp==="string"){
     var s=d.rule.disp;

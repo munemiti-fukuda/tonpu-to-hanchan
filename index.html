@@ -93,7 +93,7 @@ function xmlToJson(x){
       var w=+a("who"),fr=+a("fromWho"),pao=a("paoWho")==null?w:+a("paoWho");
       k.ag.push([dl,[w,fr,pao,(a("yakuman")?"役満":ten[0]+"符"+han+"飜")+ten[1]+"点"].concat(names)]);
       if(a("doraHaiUra")&&!k.u.length)k.u=a("doraHaiUra").split(",").map(function(v){return tc(+v)});
-      k.res=off>=4
+      k.res=off>=4&&k.ag.some(function(g){return g[1].some(function(v){return /^役14\(/.test(v)})})
         ?["流局",k.ag.reduce(function(s,g){return s.map(function(v,n){return v+g[0][n]})},[0,0,0,0])]
         :[].concat.apply(["和了"],k.ag)}
     else if(n==="RYUUKYOKU"){var sc=a("sc").split(",").map(Number);k.res=[RY[a("type")]||"流局",[0,1,2,3].map(function(i){return sc[i*2+1]*100})]}
@@ -148,7 +148,7 @@ $("go").onclick=function(){
     h[0]=to;
     if(off>=4){
       var li=d.log[i].length-1,rs=d.log[i][li];
-      if(Array.isArray(rs)&&rs[0]==="和了"){
+      if(Array.isArray(rs)&&rs[0]==="和了"&&rs.some(function(e){return Array.isArray(e)&&e.some(function(v){return typeof v==="string"&&/^役14\(/.test(v)})})){
         var dsum=[0,0,0,0];
         for(var jj=1;jj<rs.length;jj+=2)if(Array.isArray(rs[jj]))rs[jj].forEach(function(v,n){dsum[n]+=v});
         d.log[i][li]=["流局",dsum];
